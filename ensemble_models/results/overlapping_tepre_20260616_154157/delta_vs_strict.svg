@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430">
+<rect width="100%" height="100%" fill="white"/>
+<text x="380.0" y="28" text-anchor="middle" font-family="Arial" font-size="18" font-weight="700">Accuracy Delta versus Strict TEPRE</text>
+<line x1="76" y1="368" x2="734" y2="368" stroke="#222"/>
+<line x1="76" y1="54" x2="76" y2="368" stroke="#222"/>
+<text x="380.0" y="412" text-anchor="middle" font-family="Arial" font-size="13">Overlap fraction</text>
+<text x="18" y="215.0" text-anchor="middle" font-family="Arial" font-size="13" transform="rotate(-90 18 215.0)">Delta (percentage points)</text>
+<line x1="100.37" y1="368" x2="100.37" y2="373" stroke="#222"/>
+<text x="100.37" y="390" text-anchor="middle" font-family="Arial" font-size="12">0.00</text>
+<line x1="303.46" y1="368" x2="303.46" y2="373" stroke="#222"/>
+<text x="303.46" y="390" text-anchor="middle" font-family="Arial" font-size="12">0.10</text>
+<line x1="405.00" y1="368" x2="405.00" y2="373" stroke="#222"/>
+<text x="405.00" y="390" text-anchor="middle" font-family="Arial" font-size="12">0.15</text>
+<line x1="506.54" y1="368" x2="506.54" y2="373" stroke="#222"/>
+<text x="506.54" y="390" text-anchor="middle" font-family="Arial" font-size="12">0.20</text>
+<line x1="709.63" y1="368" x2="709.63" y2="373" stroke="#222"/>
+<text x="709.63" y="390" text-anchor="middle" font-family="Arial" font-size="12">0.30</text>
+<line x1="76" y1="368.00" x2="734" y2="368.00" stroke="#e6e6e6"/>
+<text x="68" y="372.00" text-anchor="end" font-family="Arial" font-size="12">-0.077</text>
+<line x1="76" y1="289.50" x2="734" y2="289.50" stroke="#e6e6e6"/>
+<text x="68" y="293.50" text-anchor="end" font-family="Arial" font-size="12">-0.027</text>
+<line x1="76" y1="211.00" x2="734" y2="211.00" stroke="#e6e6e6"/>
+<text x="68" y="215.00" text-anchor="end" font-family="Arial" font-size="12">0.023</text>
+<line x1="76" y1="132.50" x2="734" y2="132.50" stroke="#e6e6e6"/>
+<text x="68" y="136.50" text-anchor="end" font-family="Arial" font-size="12">0.073</text>
+<line x1="76" y1="54.00" x2="734" y2="54.00" stroke="#e6e6e6"/>
+<text x="68" y="58.00" text-anchor="end" font-family="Arial" font-size="12">0.123</text>
+<polyline fill="none" stroke="#d62728" stroke-width="2.4" points="100.37,247.28 303.46,313.99 405.00,259.05 506.54,270.82 709.63,145.26"/>
+<line x1="100.37" y1="247.28" x2="100.37" y2="247.28" stroke="#d62728" stroke-width="1.5"/>
+<line x1="95.37" y1="247.28" x2="105.37" y2="247.28" stroke="#d62728" stroke-width="1.5"/>
+<line x1="95.37" y1="247.28" x2="105.37" y2="247.28" stroke="#d62728" stroke-width="1.5"/>
+<circle cx="100.37" cy="247.28" r="4" fill="#d62728"/>
+<line x1="303.46" y1="346.34" x2="303.46" y2="281.63" stroke="#d62728" stroke-width="1.5"/>
+<line x1="298.46" y1="346.34" x2="308.46" y2="346.34" stroke="#d62728" stroke-width="1.5"/>
+<line x1="298.46" y1="281.63" x2="308.46" y2="281.63" stroke="#d62728" stroke-width="1.5"/>
+<circle cx="303.46" cy="313.99" r="4" fill="#d62728"/>
+<line x1="405.00" y1="293.86" x2="405.00" y2="224.25" stroke="#d62728" stroke-width="1.5"/>
+<line x1="400.00" y1="293.86" x2="410.00" y2="293.86" stroke="#d62728" stroke-width="1.5"/>
+<line x1="400.00" y1="224.25" x2="410.00" y2="224.25" stroke="#d62728" stroke-width="1.5"/>
+<circle cx="405.00" cy="259.05" r="4" fill="#d62728"/>
+<line x1="506.54" y1="331.61" x2="506.54" y2="210.04" stroke="#d62728" stroke-width="1.5"/>
+<line x1="501.54" y1="331.61" x2="511.54" y2="331.61" stroke="#d62728" stroke-width="1.5"/>
+<line x1="501.54" y1="210.04" x2="511.54" y2="210.04" stroke="#d62728" stroke-width="1.5"/>
+<circle cx="506.54" cy="270.82" r="4" fill="#d62728"/>
+<line x1="709.63" y1="214.87" x2="709.63" y2="75.66" stroke="#d62728" stroke-width="1.5"/>
+<line x1="704.63" y1="214.87" x2="714.63" y2="214.87" stroke="#d62728" stroke-width="1.5"/>
+<line x1="704.63" y1="75.66" x2="714.63" y2="75.66" stroke="#d62728" stroke-width="1.5"/>
+<circle cx="709.63" cy="145.26" r="4" fill="#d62728"/>
+<line x1="88" y1="72" x2="112" y2="72" stroke="#d62728" stroke-width="2.4"/>
+<text x="120" y="76" font-family="Arial" font-size="12">Mean paired delta +/- std</text>
+</svg>

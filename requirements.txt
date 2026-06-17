@@ -1,0 +1,7 @@
+numpy==1.26.4
+tonic==1.6.0
+torch
+torchvision
+snntorch
+scikit-learn
+opencv-python

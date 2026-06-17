@@ -1,0 +1,13 @@
+{
+  "strict_mean_accuracy_percent": 98.0375,
+  "best_overlap_fraction": 0.3,
+  "best_mean_accuracy_percent": 98.10249999999999,
+  "best_mean_delta_percentage_points": 0.06499999999999839,
+  "best_improved_repetitions": 4,
+  "best_total_repetitions": 4,
+  "best_delta_ci95_percentage_points": [
+    -0.005566150409391107,
+    0.13556615040938788
+  ],
+  "interpretation_hint": "The best overlap setting gave a small, consistent improvement over the strict baseline; the effect is modest and should not be described as a large accuracy gain."
+}
