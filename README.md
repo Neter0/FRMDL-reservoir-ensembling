@@ -46,6 +46,13 @@ If `py -3.11` is unavailable, install Python 3.11 first and make sure your IDE u
 
 The experiment downloads/caches N-MNIST through Tonic if the data are not already present. Runtime can be several hours on CPU.
 
+The `data/` and `cache/` folders are intentionally not included. On the first run, Tonic creates them automatically:
+
+- `data/`: downloaded N-MNIST dataset files.
+- `cache/`: disk-cached transformed tensors used to speed up later runs.
+
+The first run therefore needs an internet connection and enough disk space for N-MNIST and the cache. Later runs reuse these folders.
+
 From the repository root:
 
 ```powershell
