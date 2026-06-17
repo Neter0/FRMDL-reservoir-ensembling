@@ -5,6 +5,8 @@ import torch.nn as nn
 
 import snntorch as snn
 
+from partition_schedules import build_temporal_partition_schedule
+
 class LSM(nn.Module):
     def __init__(self, N, in_sz, Win, Wlsm, alpha=0.9, beta=0.9, th=20):
         super().__init__()
@@ -24,25 +26,41 @@ class LSM(nn.Module):
         return spk_rec_out
 
 class LSM_partition(nn.Module):
-    def __init__(self, N, in_sz, Wins, Wlsm, num_partitions, alpha=0.9, beta=0.9, th=20):
+    def __init__(self, N, in_sz, Wins, Wlsm, num_partitions, alpha=0.9, beta=0.9, th=20,
+                 overlap_fraction=0.0, overlap_combine="mean"):
         super().__init__()
         self.Wins = Wins
         self.num_partitions = num_partitions
+        self.overlap_fraction = overlap_fraction
+        self.overlap_combine = overlap_combine
         self.fc1 = nn.Linear(in_sz, N)
         self.fc1.weight = nn.Parameter(torch.from_numpy(Wins[0]))
         self.lsm = snn.RSynaptic(alpha=alpha, beta=beta, all_to_all=True, linear_features=N, threshold=th)
         self.lsm.recurrent.weight = nn.Parameter(torch.from_numpy(Wlsm))
+    def _partition_current(self, x_step, active_parts, partition_weights):
+        currents = []
+        for part in active_parts:
+            currents.append(nn.functional.linear(x_step, partition_weights[part], self.fc1.bias))
+        if self.overlap_combine == "sum":
+            return torch.stack(currents).sum(dim=0)
+        if self.overlap_combine == "mean":
+            return torch.stack(currents).mean(dim=0)
+        raise ValueError("overlap_combine must be 'mean' or 'sum'")
     def forward(self, x, device):
         num_steps = x.size(0)
         spk, syn, mem = self.lsm.init_rsynaptic()
         spk_rec = []
-        partition_steps = num_steps//self.num_partitions
-        Win_ind = 0
+        partition_schedule = build_temporal_partition_schedule(
+            num_steps,
+            self.num_partitions,
+            overlap_fraction=self.overlap_fraction,
+        )
+        partition_weights = [
+            torch.from_numpy(self.Wins[part]).to(device)
+            for part in range(self.num_partitions)
+        ]
         for step in range(num_steps):
-            if (step%partition_steps==0):
-                self.fc1.weight = nn.Parameter(torch.from_numpy(self.Wins[Win_ind]).to(device))
-                Win_ind = (Win_ind + 1)%self.num_partitions
-            curr = self.fc1(x[step])
+            curr = self._partition_current(x[step], partition_schedule[step], partition_weights)
             spk, syn, mem = self.lsm(curr, spk, syn, mem)
             spk_rec.append(spk)
         spk_rec_out = torch.stack(spk_rec)
@@ -80,7 +98,8 @@ class LSM_partition_cross_partition_inh(nn.Module):
         return spk_rec_out
 
 class Gabor_LSM_partition(nn.Module):
-    def __init__(self, N, in_sz, Wins, Wlsm, Gabor_filters, stride, num_partitions, alpha=0.9, beta=0.9, th=20):
+    def __init__(self, N, in_sz, Wins, Wlsm, Gabor_filters, stride, num_partitions, alpha=0.9, beta=0.9, th=20,
+                 overlap_fraction=0.0, overlap_combine="mean"):
         super().__init__()
         in_ch = Gabor_filters.shape[1]
         out_ch = Gabor_filters.shape[0]
@@ -89,24 +108,39 @@ class Gabor_LSM_partition(nn.Module):
         self.gabor_filter.weight = nn.Parameter(Gabor_filters)
         self.Wins = Wins
         self.num_partitions = num_partitions
+        self.overlap_fraction = overlap_fraction
+        self.overlap_combine = overlap_combine
         self.fc1 = nn.Linear(in_sz, N)
         self.fc1.weight = nn.Parameter(torch.from_numpy(Wins[0]))
         self.lsm = snn.RSynaptic(alpha=alpha, beta=beta, all_to_all=True, linear_features=N, threshold=th)
         self.lsm.recurrent.weight = nn.Parameter(torch.from_numpy(Wlsm))
+    def _partition_current(self, x_step, active_parts, partition_weights):
+        currents = []
+        for part in active_parts:
+            currents.append(nn.functional.linear(x_step, partition_weights[part], self.fc1.bias))
+        if self.overlap_combine == "sum":
+            return torch.stack(currents).sum(dim=0)
+        if self.overlap_combine == "mean":
+            return torch.stack(currents).mean(dim=0)
+        raise ValueError("overlap_combine must be 'mean' or 'sum'")
     def forward(self, x, device):
         num_steps = x.size(0)
         spk, syn, mem = self.lsm.init_rsynaptic()
         spk_rec = []
-        partition_steps = num_steps//self.num_partitions
-        Win_ind = 0
+        partition_schedule = build_temporal_partition_schedule(
+            num_steps,
+            self.num_partitions,
+            overlap_fraction=self.overlap_fraction,
+        )
+        partition_weights = [
+            torch.from_numpy(self.Wins[part]).to(device)
+            for part in range(self.num_partitions)
+        ]
         for step in range(num_steps):
-            if (step%partition_steps==0):
-                self.fc1.weight = nn.Parameter(torch.from_numpy(self.Wins[Win_ind]).to(device))
-                Win_ind = (Win_ind + 1)%self.num_partitions
             #gabor_out = nn.functional.conv2d(x[step], self.G_filters, stride=self.conv_stride, padding=0)
             gabor_out = self.gabor_filter(x[step])
             gabor_out_flat = torch.reshape(gabor_out, (gabor_out.shape[0], -1))
-            curr = self.fc1(gabor_out_flat)
+            curr = self._partition_current(gabor_out_flat, partition_schedule[step], partition_weights)
             spk, syn, mem = self.lsm(curr, spk, syn, mem)
             spk_rec.append(spk)
         spk_rec_out = torch.stack(spk_rec)

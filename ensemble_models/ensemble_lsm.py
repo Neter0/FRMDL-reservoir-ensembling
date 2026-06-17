@@ -11,7 +11,8 @@ import time
 from lsm_weight_definitions import initWeights_partitionV2
 from lsm_models import LSM, LSM_partition
 
-def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12):
+def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12,
+                        overlap_fraction=0.0, overlap_combine="mean"):
 
     #Load dataset (Using NMNIST here)
     sensor_size = tonic.datasets.NMNIST.sensor_size
@@ -75,7 +76,21 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12):
         Wins_ens.append(Wins)
         Wlsms.append(np.float32(curr_prefac*Wlsm))
     N = Wlsms[0].shape[0]
-    lsm_nets = [LSM_partition(N, in_sz, Wins_ens[i], Wlsms[i], num_partitions, alpha=alpha, beta=beta, th=th).to(device) for i in range(num_res)]
+    lsm_nets = [
+        LSM_partition(
+            N,
+            in_sz,
+            Wins_ens[i],
+            Wlsms[i],
+            num_partitions,
+            alpha=alpha,
+            beta=beta,
+            th=th,
+            overlap_fraction=overlap_fraction,
+            overlap_combine=overlap_combine,
+        ).to(device)
+        for i in range(num_res)
+    ]
     #Run with no_grad for LSM
     with torch.no_grad():
         start_time = time.time()
@@ -128,6 +143,8 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12):
     print("mean LSM spiking (test) : ", np.mean(lsm_out_test))
     print('number of reservoirs : ', num_res)
     print('num partitions : ', num_partitions)
+    print('overlap fraction : ', overlap_fraction)
+    print('overlap combine : ', overlap_combine)
 
     print("training linear model:")
     clf = linear_model.SGDClassifier(max_iter=10000, tol=1e-6)

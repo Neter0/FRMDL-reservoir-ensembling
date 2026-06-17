@@ -11,7 +11,8 @@ import time
 from lsm_weight_definitions import build_gabor_filter_bank, initWeights_receptive_field_short_long_dist_partition
 from lsm_models import Gabor_LSM_partition
 
-def long_short_Gabor_ensemble_lsm(in_conn, long_dist1=5, long_dist2=10, num_partitions=1):
+def long_short_Gabor_ensemble_lsm(in_conn, long_dist1=5, long_dist2=10, num_partitions=1,
+                                  overlap_fraction=0.0, overlap_combine="mean"):
 
     #Load dataset (Using NMNIST here)
     sensor_size = tonic.datasets.NMNIST.sensor_size
@@ -94,9 +95,50 @@ def long_short_Gabor_ensemble_lsm(in_conn, long_dist1=5, long_dist2=10, num_part
     Wlsm_long2 = np.float32(curr_prefac*Wlsm_l2*(conn_P2_l2))
     N = Wlsm_long.shape[0]
     #lsm_nets = [LSM_partition(N, in_sz, Wins_ens[i], Wlsms[i], num_partitions, alpha=alpha, beta=beta, th=th).to(device) for i in range(num_res)]
-    lsm_nets = [Gabor_LSM_partition(N, in_sz, Wins_s, Wlsm_short, filters, stride, num_partitions, alpha=alpha, beta=beta, th=th).to(device),
-                Gabor_LSM_partition(N, in_sz, Wins_l, Wlsm_long, filters, stride, num_partitions, alpha=alpha, beta=beta, th=th).to(device),
-                Gabor_LSM_partition(N, in_sz, Wins_l2, Wlsm_long2, filters, stride, num_partitions, alpha=alpha, beta=beta, th=th).to(device)]
+    lsm_nets = [
+        Gabor_LSM_partition(
+            N,
+            in_sz,
+            Wins_s,
+            Wlsm_short,
+            filters,
+            stride,
+            num_partitions,
+            alpha=alpha,
+            beta=beta,
+            th=th,
+            overlap_fraction=overlap_fraction,
+            overlap_combine=overlap_combine,
+        ).to(device),
+        Gabor_LSM_partition(
+            N,
+            in_sz,
+            Wins_l,
+            Wlsm_long,
+            filters,
+            stride,
+            num_partitions,
+            alpha=alpha,
+            beta=beta,
+            th=th,
+            overlap_fraction=overlap_fraction,
+            overlap_combine=overlap_combine,
+        ).to(device),
+        Gabor_LSM_partition(
+            N,
+            in_sz,
+            Wins_l2,
+            Wlsm_long2,
+            filters,
+            stride,
+            num_partitions,
+            alpha=alpha,
+            beta=beta,
+            th=th,
+            overlap_fraction=overlap_fraction,
+            overlap_combine=overlap_combine,
+        ).to(device),
+    ]
     #Run with no_grad for LSM
     with torch.no_grad():
         start_time = time.time()
@@ -148,6 +190,8 @@ def long_short_Gabor_ensemble_lsm(in_conn, long_dist1=5, long_dist2=10, num_part
     
     print('num partitions : ', num_partitions)
     print('in conn : ', in_conn)
+    print('overlap fraction : ', overlap_fraction)
+    print('overlap combine : ', overlap_combine)
 
     print("training linear model:")
     clf = linear_model.SGDClassifier(max_iter=10000, tol=1e-6)

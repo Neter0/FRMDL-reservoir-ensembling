@@ -1,0 +1,20 @@
+{
+  "started_at": "2026-06-16 15:41:57",
+  "reps": 4,
+  "num_res": 3,
+  "num_partitions": 3,
+  "in_conn": 0.15,
+  "nz": 12,
+  "seed_base": 1234,
+  "overlaps": [
+    0.0,
+    0.1,
+    0.15,
+    0.2,
+    0.3
+  ],
+  "overlap_combine": "mean",
+  "example_steps": 100,
+  "strict_baseline_note": "overlap_fraction=0.0 is the strict non-overlapping TEPRE baseline used for comparison.",
+  "finished_at": "2026-06-16 23:32:31"
+}

@@ -18,3 +18,4 @@ cache/
 *.sqlite3
 .DS_Store
 pip_freeze.txt
+.idea
