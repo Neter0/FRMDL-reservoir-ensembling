@@ -11,7 +11,7 @@ import time
 from lsm_weight_definitions import build_gabor_filter_bank, initWeights_receptive_field_short_long_dist_partition
 from lsm_models import Gabor_LSM_partition
 
-def long_short_Gabor_ensemble_lsm(in_conn, long_dist1=5, long_dist2=10, num_partitions=1):
+def long_short_Gabor_ensemble_lsm(in_conn, long_dist1=5, long_dist2=10, num_partitions=1, Nz = 12):
 
     #Load dataset (Using NMNIST here)
     sensor_size = tonic.datasets.NMNIST.sensor_size
@@ -64,7 +64,7 @@ def long_short_Gabor_ensemble_lsm(in_conn, long_dist1=5, long_dist2=10, num_part
 
     Nx=10
     Ny=10
-    Nz=12
+    #Nz=12
     
     inh_fr = 0.5
     #in_conn = 0.05
