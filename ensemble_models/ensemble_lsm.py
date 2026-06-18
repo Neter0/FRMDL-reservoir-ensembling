@@ -11,26 +11,41 @@ import time
 from lsm_weight_definitions import initWeights_partitionV2
 from lsm_models import LSM, LSM_partition
 
-def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12):
+def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=30, dataset = 'NMNIST', tauV=16.0, tauI=16.0):
 
-    #Load dataset (Using NMNIST here)
-    sensor_size = tonic.datasets.NMNIST.sensor_size
-    frame_transform = transforms.Compose([transforms.Denoise(filter_time=3000),
-                                          transforms.ToFrame(sensor_size=sensor_size,time_window=1000)])
+    if dataset == 'NMNIST':
+        #Load dataset (Using NMNIST here)
+        sensor_size = tonic.datasets.NMNIST.sensor_size
+        frame_transform = transforms.Compose([transforms.Denoise(filter_time=3000),
+                                            transforms.ToFrame(sensor_size=sensor_size,time_window=1000)])
 
-    trainset = tonic.datasets.NMNIST(save_to='../data', transform=frame_transform, train=True)
-    testset = tonic.datasets.NMNIST(save_to='../data', transform=frame_transform, train=False)
+        trainset = tonic.datasets.NMNIST(save_to='../data', transform=frame_transform, train=True)
+        testset = tonic.datasets.NMNIST(save_to='../data', transform=frame_transform, train=False)
 
-    cached_trainset = DiskCachedDataset(trainset, cache_path='../cache/nmnist/train')
-    cached_testset = DiskCachedDataset(testset, cache_path='../cache/nmnist/test')
+        cached_trainset = DiskCachedDataset(trainset, cache_path='../cache/nmnist/train')
+        cached_testset = DiskCachedDataset(testset, cache_path='../cache/nmnist/test')
 
-    batch_size = 256
-    trainloader = DataLoader(cached_trainset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), shuffle=True)
-    testloader = DataLoader(cached_testset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False))
+        batch_size = 256
+        trainloader = DataLoader(cached_trainset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), shuffle=True)
+        testloader = DataLoader(cached_testset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False))
+    elif dataset == 'SHD':
+        #Load dataset (Using SHD here)
+        sensor_size = tonic.datasets.SHD.sensor_size
+        frame_transform = transforms.ToFrame(sensor_size=sensor_size,time_window=1000)
+
+        trainset = tonic.datasets.SHD(save_to='../data', transform=frame_transform, train=True)
+        testset = tonic.datasets.SHD(save_to='../data', transform=frame_transform, train=False)
+
+        cached_trainset = DiskCachedDataset(trainset, cache_path='../cache/shd/train')
+        cached_testset = DiskCachedDataset(testset, cache_path='../cache/shd/test')
+
+        batch_size = 256
+        trainloader = DataLoader(cached_trainset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), shuffle=True)
+        testloader = DataLoader(cached_testset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False))
 
     #Set device
-    device = torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
-    #device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    #device = torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     print(device)
 
     data, targets = next(iter(trainloader))
@@ -40,8 +55,8 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12):
     in_sz = flat_data.shape[-1]
 
     #Set neuron parameters
-    tauV = 16.0
-    tauI = 16.0
+    tauV = tauV
+    tauI = tauI
     th = 20
     curr_prefac = np.float32(1/tauI)
     alpha = np.float32(np.exp(-1/tauI))
@@ -136,3 +151,5 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12):
     score = clf.score(lsm_out_test, lsm_label_test)
     print("test score = " + str(score))
     return score
+
+

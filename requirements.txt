@@ -1,0 +1,7 @@
+torch
+torchvision
+snntorch
+tonic
+numpy
+scikit-learn
+opencv-python
