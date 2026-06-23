@@ -1,0 +1,44 @@
+{
+  "best_accuracy_overlap_condition": {
+    "schedule_mode": "uniform",
+    "overlap_mode": "symmetric",
+    "overlap_fraction": 0.3,
+    "mean_accuracy_percent": 98.1025,
+    "mean_delta_vs_strict_percent": 0.06499999999999839,
+    "improved_reps": 4,
+    "n": 4
+  },
+  "largest_delta_overlap_condition": {
+    "schedule_mode": "random_boundary",
+    "overlap_mode": "symmetric",
+    "overlap_fraction": 0.3,
+    "mean_accuracy_percent": 97.725,
+    "mean_delta_vs_strict_percent": 0.07750000000000257,
+    "improved_reps": 3,
+    "n": 4
+  },
+  "main_extension_condition": {
+    "schedule_mode": "uniform",
+    "overlap_mode": "symmetric",
+    "overlap_fraction": 0.3,
+    "mean_accuracy_percent": 98.1025,
+    "mean_delta_vs_strict_percent": 0.06499999999999839,
+    "improved_reps": 4,
+    "n": 4
+  },
+  "worst_overlap_condition": {
+    "schedule_mode": "saccade",
+    "overlap_mode": "random",
+    "overlap_fraction": 0.3,
+    "mean_accuracy_percent": 97.86,
+    "mean_delta_vs_strict_percent": -0.18249999999999933,
+    "improved_reps": 0,
+    "n": 4
+  },
+  "best_strict_baseline": {
+    "schedule_mode": "saccade",
+    "mean_accuracy_percent": 98.0425,
+    "n": 4
+  },
+  "interpretation": "Adjacent boundary overlap gives a small positive mean effect for uniform, event-density, and random-boundary splits, but not for saccade-aligned splits. Random overlap is consistently worse than the matching strict baseline, supporting the interpretation that the useful signal comes from structured neighboring-boundary context rather than arbitrary extra duplicated frames."
+}

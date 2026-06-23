@@ -1,0 +1,39 @@
+{
+  "started_at": "2026-06-22 22:39:36",
+  "purpose": "Focused follow-up: saccade-aligned partitions and more strict-vs-best-overlap paired seeds.",
+  "reps": 4,
+  "seed_base": 1234,
+  "num_res": 3,
+  "num_partitions": 3,
+  "in_conn": 0.15,
+  "nz": 12,
+  "overlaps": [
+    0.0,
+    0.3
+  ],
+  "schedule_modes": [
+    "uniform",
+    "saccade",
+    "event_density",
+    "random_boundary"
+  ],
+  "overlap_modes": [
+    "symmetric",
+    "random"
+  ],
+  "overlap_combine": "mean",
+  "frame_window_us": 1000,
+  "batch_size": 256,
+  "requested_device": "cuda",
+  "cuda_available": true,
+  "cuda_device": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+  "reuse_results_dir": "results/followup_tepre_20260622_4seed_summary_v2",
+  "event_density_boundaries": [
+    0,
+    67,
+    174,
+    313
+  ],
+  "event_density_boundary_batches": 20,
+  "finished_at": "2026-06-23 04:57:06"
+}

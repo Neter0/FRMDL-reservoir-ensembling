@@ -1,0 +1,16 @@
+{
+  "num_partitions": 3,
+  "overlaps": [
+    0.0,
+    0.3
+  ],
+  "schedule_modes": [
+    "uniform",
+    "saccade"
+  ],
+  "frame_window_us": 1000,
+  "batch_size": 256,
+  "max_train_batches": 20,
+  "max_test_batches": 10,
+  "results_dir": "results\\partition_event_counts_20260622_rerun"
+}

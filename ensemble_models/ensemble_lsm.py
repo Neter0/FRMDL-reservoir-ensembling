@@ -12,12 +12,16 @@ from lsm_weight_definitions import initWeights_partitionV2
 from lsm_models import LSM, LSM_partition
 
 def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12,
-                        overlap_fraction=0.0, overlap_combine="mean"):
+                        overlap_fraction=0.0, overlap_combine="mean",
+                        schedule_mode="uniform", frame_window_us=1000,
+                        batch_size=256, device_name=None,
+                        overlap_mode="symmetric", schedule_boundaries=None,
+                        schedule_seed=0):
 
     #Load dataset (Using NMNIST here)
     sensor_size = tonic.datasets.NMNIST.sensor_size
     frame_transform = transforms.Compose([transforms.Denoise(filter_time=3000),
-                                          transforms.ToFrame(sensor_size=sensor_size,time_window=1000)])
+                                          transforms.ToFrame(sensor_size=sensor_size,time_window=frame_window_us)])
 
     trainset = tonic.datasets.NMNIST(save_to='../data', transform=frame_transform, train=True)
     testset = tonic.datasets.NMNIST(save_to='../data', transform=frame_transform, train=False)
@@ -25,13 +29,18 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12,
     cached_trainset = DiskCachedDataset(trainset, cache_path='../cache/nmnist/train')
     cached_testset = DiskCachedDataset(testset, cache_path='../cache/nmnist/test')
 
-    batch_size = 256
     trainloader = DataLoader(cached_trainset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), shuffle=True)
     testloader = DataLoader(cached_testset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False))
 
     #Set device
-    device = torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
-    #device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    if device_name is not None:
+        device = torch.device(device_name)
+    elif torch.cuda.is_available():
+        device = torch.device("cuda")
+    elif torch.backends.mps.is_available():
+        device = torch.device("mps")
+    else:
+        device = torch.device("cpu")
     print(device)
 
     data, targets = next(iter(trainloader))
@@ -88,6 +97,11 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12,
             th=th,
             overlap_fraction=overlap_fraction,
             overlap_combine=overlap_combine,
+            schedule_mode=schedule_mode,
+            frame_window_us=frame_window_us,
+            overlap_mode=overlap_mode,
+            schedule_boundaries=schedule_boundaries,
+            schedule_seed=schedule_seed,
         ).to(device)
         for i in range(num_res)
     ]
@@ -145,6 +159,10 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=12,
     print('num partitions : ', num_partitions)
     print('overlap fraction : ', overlap_fraction)
     print('overlap combine : ', overlap_combine)
+    print('schedule mode : ', schedule_mode)
+    print('frame window us : ', frame_window_us)
+    print('overlap mode : ', overlap_mode)
+    print('schedule boundaries : ', schedule_boundaries)
 
     print("training linear model:")
     clf = linear_model.SGDClassifier(max_iter=10000, tol=1e-6)

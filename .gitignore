@@ -19,3 +19,7 @@ cache/
 .DS_Store
 pip_freeze.txt
 .idea
+ensemble_models/results/followup_tepre_20260622_204828/
+ensemble_models/results/followup_tepre_20260622_4seed_summary/
+ensemble_models/results/followup_tepre_20260622_4seed_summary_v2/
+ensemble_models/results/tepre_ablation_dry_run_20260622/

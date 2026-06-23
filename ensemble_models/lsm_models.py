@@ -27,12 +27,19 @@ class LSM(nn.Module):
 
 class LSM_partition(nn.Module):
     def __init__(self, N, in_sz, Wins, Wlsm, num_partitions, alpha=0.9, beta=0.9, th=20,
-                 overlap_fraction=0.0, overlap_combine="mean"):
+                 overlap_fraction=0.0, overlap_combine="mean", schedule_mode="uniform",
+                 frame_window_us=1000, overlap_mode="symmetric", schedule_boundaries=None,
+                 schedule_seed=0):
         super().__init__()
         self.Wins = Wins
         self.num_partitions = num_partitions
         self.overlap_fraction = overlap_fraction
         self.overlap_combine = overlap_combine
+        self.schedule_mode = schedule_mode
+        self.frame_window_us = frame_window_us
+        self.overlap_mode = overlap_mode
+        self.schedule_boundaries = schedule_boundaries
+        self.schedule_seed = schedule_seed
         self.fc1 = nn.Linear(in_sz, N)
         self.fc1.weight = nn.Parameter(torch.from_numpy(Wins[0]))
         self.lsm = snn.RSynaptic(alpha=alpha, beta=beta, all_to_all=True, linear_features=N, threshold=th)
@@ -54,6 +61,11 @@ class LSM_partition(nn.Module):
             num_steps,
             self.num_partitions,
             overlap_fraction=self.overlap_fraction,
+            schedule_mode=self.schedule_mode,
+            frame_window_us=self.frame_window_us,
+            overlap_mode=self.overlap_mode,
+            custom_boundaries=self.schedule_boundaries,
+            random_seed=self.schedule_seed,
         )
         partition_weights = [
             torch.from_numpy(self.Wins[part]).to(device)
@@ -99,7 +111,9 @@ class LSM_partition_cross_partition_inh(nn.Module):
 
 class Gabor_LSM_partition(nn.Module):
     def __init__(self, N, in_sz, Wins, Wlsm, Gabor_filters, stride, num_partitions, alpha=0.9, beta=0.9, th=20,
-                 overlap_fraction=0.0, overlap_combine="mean"):
+                 overlap_fraction=0.0, overlap_combine="mean", schedule_mode="uniform",
+                 frame_window_us=1000, overlap_mode="symmetric", schedule_boundaries=None,
+                 schedule_seed=0):
         super().__init__()
         in_ch = Gabor_filters.shape[1]
         out_ch = Gabor_filters.shape[0]
@@ -110,6 +124,11 @@ class Gabor_LSM_partition(nn.Module):
         self.num_partitions = num_partitions
         self.overlap_fraction = overlap_fraction
         self.overlap_combine = overlap_combine
+        self.schedule_mode = schedule_mode
+        self.frame_window_us = frame_window_us
+        self.overlap_mode = overlap_mode
+        self.schedule_boundaries = schedule_boundaries
+        self.schedule_seed = schedule_seed
         self.fc1 = nn.Linear(in_sz, N)
         self.fc1.weight = nn.Parameter(torch.from_numpy(Wins[0]))
         self.lsm = snn.RSynaptic(alpha=alpha, beta=beta, all_to_all=True, linear_features=N, threshold=th)
@@ -131,6 +150,11 @@ class Gabor_LSM_partition(nn.Module):
             num_steps,
             self.num_partitions,
             overlap_fraction=self.overlap_fraction,
+            schedule_mode=self.schedule_mode,
+            frame_window_us=self.frame_window_us,
+            overlap_mode=self.overlap_mode,
+            custom_boundaries=self.schedule_boundaries,
+            random_seed=self.schedule_seed,
         )
         partition_weights = [
             torch.from_numpy(self.Wins[part]).to(device)

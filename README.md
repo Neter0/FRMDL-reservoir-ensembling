@@ -1,31 +1,23 @@
 # snntorch-LSM Reproduction Extension
 
-This repository is based on the authors' `snntorch-LSM` implementation for Liquid State Machines. For our reproduction project, we use the existing code path for N-MNIST TEPRE-style temporal partitioning and add one new algorithm variant: overlapping temporal partitions.
+This repository reproduces and extends part of the N-MNIST TEPRE experiments from the paper on Temporal and Spatial Reservoir Ensembling Techniques for Liquid State Machines.
 
-## Project Focus
+Our extension tests whether strict non-overlapping temporal partitions lose useful boundary information. The original TEPRE-style split assigns each time step to exactly one reservoir partition. Our variant lets neighboring temporal partitions overlap, so boundary frames are processed by both adjacent partitions. We also add follow-up controls that compare adjacent overlap with random overlap and compare different temporal partition schedules.
 
-The paper reports N-MNIST results for Temporal and Spatial Reservoir Ensembling Techniques for Liquid State Machines. Our extension asks:
+## Data
 
-> Does strict temporal separation in TEPRE lose useful information when temporal patterns cross partition boundaries?
+The N-MNIST data are downloaded automatically by `tonic` on the first experiment run.
 
-The original strict temporal partitioning assigns each time step to one partition. The extension in `ensemble_models/partition_schedules.py` allows adjacent temporal partitions to overlap, so boundary frames are processed by both neighboring partitions. The default overlap combination rule is `mean`, which keeps the input current scale comparable to the strict baseline.
+The following folders are intentionally not tracked by git:
 
-Important wording for the report: `overlap_fraction=0.0` is the strict non-overlapping TEPRE baseline in the same controlled script. It is not the untouched original authors' script.
+- `data/`: downloaded N-MNIST files.
+- `cache/`: transformed cached tensors for faster later runs.
 
-## Repository Structure
-
-- `lsm_models.py`: base LSM model definitions.
-- `lsm_weight_definitions.py`: input-to-reservoir and recurrent reservoir weight definitions.
-- `main.py`: original example N-MNIST implementation.
-- `ensemble_models/lsm_models.py`: ensemble model definitions, including overlap-aware partitioned models.
-- `ensemble_models/partition_schedules.py`: strict and overlapping temporal partition schedules.
-- `ensemble_models/test_overlapping_tepre.py`: one-shot baseline-vs-overlap N-MNIST experiment.
-- `ensemble_models/analyze_overlapping_tepre_results.py`: post-processing script for plots and paired-delta tables.
-- `ensemble_models/results/overlapping_tepre_20260616_154157/`: completed result artifacts used for our report.
+The first run needs internet access and enough disk space. Later runs reuse the local `data/` and `cache/` folders.
 
 ## Setup
 
-Use Python 3.11 or 3.12. Do not use Python 3.13 for this project: `tonic==1.6.0` depends on `numpy<2.0`, and NumPy 1.26.x does not provide normal Windows wheels for Python 3.13.
+Use Python 3.11 or 3.12. Avoid Python 3.13 because `tonic==1.6.0` requires `numpy<2.0`, and NumPy 1.26.x is not normally available as a Windows wheel for Python 3.13.
 
 From the repository root:
 
@@ -36,63 +28,96 @@ python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 
-If `py -3.11` is unavailable, install Python 3.11 first and make sure your IDE uses the virtual environment interpreter:
+Optional, for NVIDIA GPU acceleration:
 
-```text
-<repo-root>\.venv\Scripts\python.exe
+```powershell
+pip uninstall torch torchvision torchaudio -y
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+pip install numpy==1.26.4 opencv-python==4.10.0.84
+python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'NO CUDA')"
 ```
 
-## Reproduce The Extension Results
+## Reproduce Results
 
-The experiment downloads/caches N-MNIST through Tonic if the data are not already present. Runtime can be several hours on CPU.
-
-The `data/` and `cache/` folders are intentionally not included. On the first run, Tonic creates them automatically:
-
-- `data/`: downloaded N-MNIST dataset files.
-- `cache/`: disk-cached transformed tensors used to speed up later runs.
-
-The first run therefore needs an internet connection and enough disk space for N-MNIST and the cache. Later runs reuse these folders.
-
-From the repository root:
+Run all commands from `ensemble_models`:
 
 ```powershell
 cd ensemble_models
-python test_overlapping_tepre.py --reps 4 --num-res 3 --num-partitions 3 --overlaps 0.0 0.10 0.15 0.20 0.30
 ```
 
-This creates a timestamped folder:
+### 1. Main Overlap Experiment
 
-```text
-ensemble_models/results/overlapping_tepre_<timestamp>/
-```
-
-The core outputs are:
-
-- `raw_runs.csv`: one row per repetition and overlap setting.
-- `summary.csv`: mean/std/min/max accuracy and paired deltas versus strict TEPRE.
-- `schedules.csv`: temporal windows and the number of overlap steps.
-- `metadata.json`: exact experiment settings.
-- `overlapping_tepre_results.npz`: NumPy archive for further analysis.
-
-## Post-Process Existing Results
-
-After the training run finishes, generate plots and paired-delta tables without retraining.
-Run this from `ensemble_models`:
+This reproduces strict TEPRE and overlap levels `0.10`, `0.15`, `0.20`, and `0.30` over 4 seeds:
 
 ```powershell
+python test_overlapping_tepre.py --reps 4 --num-res 3 --num-partitions 3 --overlaps 0.0 0.10 0.15 0.20 0.30
 python analyze_overlapping_tepre_results.py results/overlapping_tepre_<timestamp>
 ```
 
-For the included run, use this from `ensemble_models`:
+Included completed run:
 
 ```powershell
 python analyze_overlapping_tepre_results.py results/overlapping_tepre_20260616_154157
 ```
 
-This adds:
+Main outputs:
 
-- `paired_deltas.csv`: strict-vs-overlap score differences for each paired seed.
-- `delta_summary.csv`: paired delta statistics, improvement counts, and approximate 95% intervals.
-- `key_numbers.json`: main values to quote in the report.
-- `accuracy_by_overlap.svg`: accuracy plot with error bars.
-- `delta_vs_strict.svg`: delta-vs-baseline plot.
+- `summary.csv`
+- `paired_deltas.csv`
+- `delta_summary.csv`
+- `delta_vs_strict.png`
+- `accuracy_by_overlap.svg`
+
+### 2. Event-Count Analysis
+
+This checks how much activity is assigned to each partition and how much is duplicated by overlap:
+
+```powershell
+python analyze_partition_event_counts.py --overlaps 0.0 0.30 --schedule-modes uniform saccade
+```
+
+Included completed run:
+
+```text
+results/partition_event_counts_20260622_rerun/
+```
+
+Main outputs:
+
+- `partition_event_counts_raw.csv`
+- `partition_event_counts_summary.csv`
+
+### 3. Follow-Up Boundary and Random-Overlap Ablation
+
+This compares uniform, saccade-aligned, event-density, and random-boundary partitions. It also compares adjacent overlap against random overlap as a negative control.
+
+```powershell
+python run_followup_tepre.py --reps 4 --overlaps 0.0 0.30 --schedule-modes uniform saccade event_density random_boundary --overlap-modes symmetric random --device cuda
+python analyze_followup_tepre_results.py results/followup_tepre_<timestamp>
+```
+
+If CUDA is unavailable, replace `--device cuda` with `--device cpu`.
+
+Included completed run:
+
+```powershell
+python analyze_followup_tepre_results.py results/followup_tepre_20260622_223915
+```
+
+Main outputs:
+
+- `followup_compact_table.csv`
+- `followup_paired_deltas.csv`
+- `followup_key_numbers.json`
+- `followup_delta_by_schedule.png`
+- `followup_accuracy_by_schedule.png`
+- `followup_paired_seed_deltas.png`
+
+## Key Result Files
+
+The most useful files for the report/poster are:
+
+- `results/overlapping_tepre_20260616_154157/delta_vs_strict.png`
+- `results/followup_tepre_20260622_223915/followup_delta_by_schedule.png`
+- `results/followup_tepre_20260622_223915/followup_compact_table.csv`
+- `results/partition_event_counts_20260622_rerun/partition_event_counts_summary.csv`

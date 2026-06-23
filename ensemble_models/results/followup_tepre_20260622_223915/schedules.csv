@@ -1,0 +1,13 @@
+schedule_mode,overlap_fraction,overlap_mode,example_steps,windows
+uniform,0.0,none,300,"[(0, 100), (100, 200), (200, 300)]"
+uniform,0.3,symmetric,300,"[(0, 115), (85, 215), (185, 300)]"
+uniform,0.3,random,300,"[(0, 300), (4, 299), (1, 300)]"
+saccade,0.0,none,300,"[(0, 100), (100, 200), (200, 300)]"
+saccade,0.3,symmetric,300,"[(0, 115), (85, 215), (185, 300)]"
+saccade,0.3,random,300,"[(0, 300), (4, 299), (1, 300)]"
+event_density,0.0,none,300,"[(0, 64), (64, 167), (167, 300)]"
+event_density,0.3,symmetric,300,"[(0, 74), (55, 177), (158, 300)]"
+event_density,0.3,random,300,"[(0, 298), (24, 299), (34, 300)]"
+random_boundary,0.0,none,300,"[(0, 74), (74, 254), (254, 300)]"
+random_boundary,0.3,symmetric,300,"[(0, 81), (67, 261), (247, 300)]"
+random_boundary,0.3,random,300,"[(0, 298), (24, 299), (63, 300)]"
