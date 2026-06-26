@@ -16,6 +16,7 @@ if __name__ == "__main__":
 
     results = [0.7221731448763251, 0.7592756183745583, 0.7075971731448764, 0.7367491166077739, 0.7217314487632509]
     plt.boxplot(results)
+    plt.scatter(1, 0.778, color="green", zorder=3)
     plt.ylabel("Score")
     plt.show()
     

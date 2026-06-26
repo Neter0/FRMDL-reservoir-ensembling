@@ -11,7 +11,18 @@ import time
 from lsm_weight_definitions import initWeights_partitionV2
 from lsm_models import LSM, LSM_partition
 
-def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=30, dataset = 'NMNIST', tauV=16.0, tauI=16.0):
+def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=30, dataset = 'NMNIST', tauV=16.0, tauI=16.0, beta_LIF = 0.99,
+                        neuron_dynamics = 'SLIF', rho = 0.95, T_min=3, T_max=100, seed = None, bias = True):
+
+    if seed is not None:
+        np.random.seed(seed)    
+        torch.manual_seed(seed)
+    else:
+        seed = np.random.randint(0, 10000)
+        np.random.seed(seed)    
+        torch.manual_seed(seed)
+
+    train_generator = torch.Generator().manual_seed(seed)
 
     if dataset == 'NMNIST':
         #Load dataset (Using NMNIST here)
@@ -26,8 +37,8 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=30, dataset = '
         cached_testset = DiskCachedDataset(testset, cache_path='../cache/nmnist/test')
 
         batch_size = 256
-        trainloader = DataLoader(cached_trainset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), shuffle=True)
-        testloader = DataLoader(cached_testset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False))
+        trainloader = DataLoader(cached_trainset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), shuffle=True, generator=train_generator)
+        testloader = DataLoader(cached_testset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), generator=train_generator)
     elif dataset == 'SHD':
         #Load dataset (Using SHD here)
         sensor_size = tonic.datasets.SHD.sensor_size
@@ -40,8 +51,10 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=30, dataset = '
         cached_testset = DiskCachedDataset(testset, cache_path='../cache/shd/test')
 
         batch_size = 256
-        trainloader = DataLoader(cached_trainset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), shuffle=True)
-        testloader = DataLoader(cached_testset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False))
+        trainloader = DataLoader(cached_trainset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), shuffle=True, generator=train_generator)
+        testloader = DataLoader(cached_testset, batch_size=batch_size, collate_fn=tonic.collation.PadTensors(batch_first=False), generator=train_generator)
+
+
 
     #Set device
     #device = torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
@@ -90,7 +103,11 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=30, dataset = '
         Wins_ens.append(Wins)
         Wlsms.append(np.float32(curr_prefac*Wlsm))
     N = Wlsms[0].shape[0]
-    lsm_nets = [LSM_partition(N, in_sz, Wins_ens[i], Wlsms[i], num_partitions, alpha=alpha, beta=beta, th=th).to(device) for i in range(num_res)]
+
+    if neuron_dynamics == 'LIF':
+        beta = beta_LIF
+    lsm_nets = [LSM_partition(N, in_sz, Wins_ens[i], Wlsms[i], num_partitions, alpha=alpha, beta=beta, th=th, 
+                            neuron_dynamics=neuron_dynamics, T_min=T_min, T_max=T_max, rho=rho, bias=bias).to(device) for i in range(num_res)]
     #Run with no_grad for LSM
     with torch.no_grad():
         start_time = time.time()
@@ -145,7 +162,7 @@ def simple_ensemble_lsm(in_conn, num_res=2, num_partitions=1, Nz=30, dataset = '
     print('num partitions : ', num_partitions)
 
     print("training linear model:")
-    clf = linear_model.SGDClassifier(max_iter=10000, tol=1e-6)
+    clf = linear_model.SGDClassifier(max_iter=10000, tol=1e-6, random_state=seed)
     clf.fit(lsm_out_train, lsm_label_train)
 
     score = clf.score(lsm_out_test, lsm_label_test)

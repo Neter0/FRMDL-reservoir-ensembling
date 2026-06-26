@@ -13,6 +13,7 @@ from ensemble_3_reservoir_long_short_dist_lsm import long_short_ensemble_lsm
 if __name__ == "__main__":
 
     in_conn_gabor = 0.05
+    in_conn_mulre = 0.125
     in_conn_simple = 0.15
 
     params_gabor = []
@@ -32,10 +33,10 @@ if __name__ == "__main__":
     score_TEPRE = []
     
     for Nz in Nzs:
-        score_lsm.append(simple_ensemble_lsm(in_conn_simple, num_res=1, Nz=Nz))
-        score_lsm_ensemble.append(simple_ensemble_lsm(in_conn_simple, num_res=3, Nz=Nz))
-        score_MuLRE.append(long_short_ensemble_lsm(in_conn_simple, long_dist1=long_dist1, long_dist2=long_dist2, Nz=Nz))
-        score_TEPRE.append(simple_ensemble_lsm(in_conn_simple, num_res=1, num_partitions=3, Nz=Nz))
+        score_lsm.append(simple_ensemble_lsm(in_conn_mulre, num_res=1, Nz=Nz))
+        score_lsm_ensemble.append(simple_ensemble_lsm(in_conn_mulre, num_res=3, Nz=Nz))
+        score_MuLRE.append(long_short_ensemble_lsm(in_conn_mulre, long_dist1=long_dist1, long_dist2=long_dist2, Nz=Nz))
+        score_TEPRE.append(simple_ensemble_lsm(in_conn_mulre, num_res=1, num_partitions=3, Nz=Nz))
 
     # Plot results
     neurons = [Nz * 100 for Nz in Nzs]
