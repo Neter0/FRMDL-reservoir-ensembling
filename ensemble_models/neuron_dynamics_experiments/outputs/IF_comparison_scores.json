@@ -1,0 +1,710 @@
+{
+  "MuLRE RF": {
+    "12": [
+      {
+        "score": 0.8781,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 3,
+          "T_max": 50,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T17:55:36.991202+00:00"
+      },
+      {
+        "score": 0.9079,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 3,
+          "T_max": 100,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T19:35:15.521662+00:00"
+      },
+      {
+        "score": 0.9159,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 5,
+          "T_max": 150,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T19:44:45.142104+00:00"
+      },
+      {
+        "score": 0.9208,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 10,
+          "T_max": 150,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T19:54:18.118976+00:00"
+      },
+      {
+        "score": 0.9246,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 10,
+          "T_max": 300,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T20:03:53.564977+00:00"
+      },
+      {
+        "score": 0.9282,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 20,
+          "T_max": 300,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T20:13:22.653923+00:00"
+      },
+      {
+        "score": 0.9339,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 50,
+          "T_max": 300,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T20:32:24.274214+00:00"
+      },
+      {
+        "score": 0.9339,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 50,
+          "T_max": 300,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T13:16:20.420516+00:00"
+      },
+      {
+        "score": 0.9344,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 100,
+          "T_max": 300,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T13:25:52.115731+00:00"
+      },
+      {
+        "score": 0.9324,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 175,
+          "T_max": 300,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T13:35:35.492556+00:00"
+      },
+      {
+        "score": 0.9322,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "T_min": 300,
+          "T_max": 300,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T13:45:20.360337+00:00"
+      },
+      {
+        "score": 0.935,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "seed": 42,
+          "T_min": 30,
+          "T_max": 300
+        },
+        "timestamp_utc": "2026-06-25T16:55:05.244258+00:00"
+      },
+      {
+        "score": 0.9338,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "seed": 123,
+          "T_min": 30,
+          "T_max": 300
+        },
+        "timestamp_utc": "2026-06-25T17:04:48.531135+00:00"
+      },
+      {
+        "score": 0.932,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "neuron_dynamics": "RF",
+          "seed": 456,
+          "T_min": 30,
+          "T_max": 300
+        },
+        "timestamp_utc": "2026-06-25T17:14:24.164617+00:00"
+      }
+    ]
+  },
+  "MuLRE IF": {
+    "12": [
+      {
+        "score": 0.9277,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "IF",
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T18:03:43.313509+00:00"
+      },
+      {
+        "score": 0.9298,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "IF",
+          "seed": 123
+        },
+        "timestamp_utc": "2026-06-24T18:33:43.664149+00:00"
+      },
+      {
+        "score": 0.9283,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "IF",
+          "seed": 456
+        },
+        "timestamp_utc": "2026-06-24T18:42:03.693022+00:00"
+      }
+    ]
+  },
+  "MuLRE SLIF": {
+    "12": [
+      {
+        "score": 0.9737,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "SLIF",
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T18:14:14.602791+00:00"
+      },
+      {
+        "score": 0.9762,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "SLIF",
+          "seed": 123
+        },
+        "timestamp_utc": "2026-06-24T18:52:35.709643+00:00"
+      },
+      {
+        "score": 0.9775,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "SLIF",
+          "seed": 456
+        },
+        "timestamp_utc": "2026-06-24T19:03:19.851988+00:00"
+      }
+    ]
+  },
+  "TEPRE IF": {
+    "12": [
+      {
+        "score": 0.9045,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "IF",
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T18:19:47.127987+00:00"
+      },
+      {
+        "score": 0.9019,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "IF",
+          "seed": 123
+        },
+        "timestamp_utc": "2026-06-24T19:08:46.831086+00:00"
+      },
+      {
+        "score": 0.9032,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "IF",
+          "seed": 456
+        },
+        "timestamp_utc": "2026-06-24T19:14:15.874129+00:00"
+      }
+    ]
+  },
+  "TEPRE SLIF": {
+    "12": [
+      {
+        "score": 0.9738,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "SLIF",
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-24T18:25:27.322220+00:00"
+      },
+      {
+        "score": 0.9713,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "SLIF",
+          "seed": 123
+        },
+        "timestamp_utc": "2026-06-24T19:19:56.726967+00:00"
+      },
+      {
+        "score": 0.9717,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "SLIF",
+          "seed": 456
+        },
+        "timestamp_utc": "2026-06-24T19:25:34.871276+00:00"
+      }
+    ]
+  },
+  "TEPRE RF": {
+    "12": [
+      {
+        "score": 0.6757,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "T_min": 2,
+          "T_max": 50,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T12:21:42.807721+00:00"
+      },
+      {
+        "score": 0.7724,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "T_min": 5,
+          "T_max": 75,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T12:28:10.592765+00:00"
+      },
+      {
+        "score": 0.8102,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "T_min": 10,
+          "T_max": 75,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T12:34:36.615860+00:00"
+      },
+      {
+        "score": 0.8067,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "T_min": 10,
+          "T_max": 100,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T12:41:00.204313+00:00"
+      },
+      {
+        "score": 0.8333,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "T_min": 20,
+          "T_max": 100,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T12:47:13.967565+00:00"
+      },
+      {
+        "score": 0.8494,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "T_min": 30,
+          "T_max": 100,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T12:53:22.897229+00:00"
+      },
+      {
+        "score": 0.8619,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "T_min": 50,
+          "T_max": 100,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T13:06:35.895532+00:00"
+      },
+      {
+        "score": 0.8785,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "T_min": 75,
+          "T_max": 100,
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T13:51:26.274453+00:00"
+      },
+      {
+        "score": 0.8794,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "seed": 42,
+          "T_min": 100,
+          "T_max": 100
+        },
+        "timestamp_utc": "2026-06-25T16:33:12.517329+00:00"
+      },
+      {
+        "score": 0.8731,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "seed": 123,
+          "T_min": 100,
+          "T_max": 100
+        },
+        "timestamp_utc": "2026-06-25T16:39:18.292247+00:00"
+      },
+      {
+        "score": 0.8756,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "num_partitions": 3,
+          "neuron_dynamics": "RF",
+          "seed": 456,
+          "T_min": 100,
+          "T_max": 100
+        },
+        "timestamp_utc": "2026-06-25T16:45:24.211643+00:00"
+      }
+    ]
+  },
+  "MuLRE LIF": {
+    "12": [
+      {
+        "score": 0.9258,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "num_res": 1,
+          "beta": 0.995,
+          "num_partitions": 3,
+          "neuron_dynamics": "LIF",
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T19:16:28.551962+00:00"
+      },
+      {
+        "score": 0.9283,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "num_res": 1,
+          "beta": 0.995,
+          "num_partitions": 3,
+          "neuron_dynamics": "LIF",
+          "seed": 123
+        },
+        "timestamp_utc": "2026-06-25T19:24:50.358342+00:00"
+      },
+      {
+        "score": 0.928,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "MuLRE",
+          "in_conn": 0.125,
+          "long_dist1": 4,
+          "long_dist2": 6,
+          "num_res": 1,
+          "beta": 0.995,
+          "num_partitions": 3,
+          "neuron_dynamics": "LIF",
+          "seed": 456
+        },
+        "timestamp_utc": "2026-06-25T19:33:15.917278+00:00"
+      }
+    ]
+  },
+  "TEPRE LIF": {
+    "12": [
+      {
+        "score": 0.8988,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "beta": 0.98,
+          "num_partitions": 3,
+          "neuron_dynamics": "LIF",
+          "seed": 42
+        },
+        "timestamp_utc": "2026-06-25T19:38:55.861983+00:00"
+      },
+      {
+        "score": 0.8883,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "beta": 0.98,
+          "num_partitions": 3,
+          "neuron_dynamics": "LIF",
+          "seed": 123
+        },
+        "timestamp_utc": "2026-06-25T19:44:39.172892+00:00"
+      },
+      {
+        "score": 0.8978,
+        "Nz": 12,
+        "neurons": 1200,
+        "params": {
+          "model": "TEPRE",
+          "in_conn": 0.15,
+          "num_res": 1,
+          "beta": 0.98,
+          "num_partitions": 3,
+          "neuron_dynamics": "LIF",
+          "seed": 456
+        },
+        "timestamp_utc": "2026-06-25T19:50:17.554947+00:00"
+      }
+    ]
+  }
+}
