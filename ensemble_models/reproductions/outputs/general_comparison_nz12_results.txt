@@ -1,0 +1,9 @@
+# 2026-06-26 18:47  N-MNIST comparison  (in_conn=0.15, Nz=12, neurons=1200, partitions=3)
+LSM                  = 0.9627
+Vanilla Ensemble     = 0.9752
+MuLRE                = 0.9699
+TEPRE                = 0.9729
+MuLRE+TEPRE (reused) = 0.9654
+
+figure  -> /home/alex/projects/school/FRMDL-reservoir-ensembling/ensemble_models/reproductions/outputs/general_comparison_nz12.png
+numbers -> /home/alex/projects/school/FRMDL-reservoir-ensembling/ensemble_models/reproductions/outputs/general_comparison_nz12_results.json

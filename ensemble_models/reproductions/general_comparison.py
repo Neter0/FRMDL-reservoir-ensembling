@@ -30,26 +30,51 @@ if __name__ == "__main__":
     score_lsm_ensemble = []
     score_MuLRE = []
     score_TEPRE = []
-    
+    score_MuLRE_TEPRE = []
+
     for Nz in Nzs:
         score_lsm.append(simple_ensemble_lsm(in_conn_simple, num_res=1, Nz=Nz))
         score_lsm_ensemble.append(simple_ensemble_lsm(in_conn_simple, num_res=3, Nz=Nz))
         score_MuLRE.append(long_short_ensemble_lsm(in_conn_simple, long_dist1=long_dist1, long_dist2=long_dist2, Nz=Nz))
         score_TEPRE.append(simple_ensemble_lsm(in_conn_simple, num_res=1, num_partitions=3, Nz=Nz))
+        
+        # MuLRE x TEPRE: the 3 distance-diverse reservoirs (short / long_dist1 / long_dist2),
+        score_MuLRE_TEPRE.append(long_short_ensemble_lsm(in_conn_simple, long_dist1=long_dist1, long_dist2=long_dist2, num_partitions=3, Nz=Nz))
 
     # Plot results
     neurons = [Nz * 100 for Nz in Nzs]
     
+    output_dir = Path(__file__).parent / "outputs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Print + save the raw numbers (readable even if no figure window opens, e.g. headless WSL)
+    methods = [
+        ("LSM", score_lsm),
+        ("Vanilla Ensemble", score_lsm_ensemble),
+        ("MuLRE", score_MuLRE),
+        ("TEPRE", score_TEPRE),
+        ("MuLRE+TEPRE", score_MuLRE_TEPRE),
+    ]
+    header = "neurons:        " + "  ".join(f"{n:>8d}" for n in neurons)
+    report_lines = ["Ensemble Method Comparison (test accuracy)", header]
+    for name, scores in methods:
+        report_lines.append(f"{name:<16}" + "  ".join(f"{s:>8.4f}" for s in scores))
+    report = "\n".join(report_lines)
+    print("\n" + report + "\n")
+    (output_dir / "general_comparison_results.txt").write_text(report + "\n")
+
     plt.figure(figsize=(10, 6))
     plt.plot(neurons, score_lsm, 'o-', color='blue', label='LSM', linewidth=2, markersize=8)
     plt.plot(neurons, score_lsm_ensemble, 's-', color='green', label='Vanilla Ensemble', linewidth=2, markersize=8)
     plt.plot(neurons, score_MuLRE, '^-', color='red', label='MuLRE', linewidth=2, markersize=8)
     plt.plot(neurons, score_TEPRE, 'd-', color='purple', label='TEPRE', linewidth=2, markersize=8)
-    
+    plt.plot(neurons, score_MuLRE_TEPRE, 'v-', color='orange', label='MuLRE+TEPRE', linewidth=2, markersize=8)
+
     plt.xlabel('Neurons', fontsize=12)
     plt.ylabel('Accuracy Score', fontsize=12)
     plt.title('Ensemble Method Comparison', fontsize=14, fontweight='bold')
     plt.legend(fontsize=11, loc='best')
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
+    plt.savefig(output_dir / 'general_comparison.png', dpi=300, bbox_inches='tight')
     plt.show()

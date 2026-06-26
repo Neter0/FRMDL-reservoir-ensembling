@@ -1,0 +1,1 @@
+2026-06-26 17:07  MuLRE+TEPRE  Nz=12  num_partitions=3 long_dist1=4 long_dist2=6 in_conn=0.15  test_accuracy=0.9654

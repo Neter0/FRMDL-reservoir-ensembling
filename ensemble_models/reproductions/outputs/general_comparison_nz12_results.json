@@ -1,0 +1,23 @@
+{
+  "dataset": "N-MNIST",
+  "config": {
+    "in_conn": 0.15,
+    "Nz": 12,
+    "neurons": 1200,
+    "num_partitions": 3,
+    "long_dist1": 4,
+    "long_dist2": 6
+  },
+  "results": {
+    "LSM": 0.9627,
+    "Vanilla Ensemble": 0.9752,
+    "MuLRE": 0.9699,
+    "TEPRE": 0.9729,
+    "MuLRE+TEPRE": 0.9654
+  },
+  "paper_reference_headline_3600_neurons": {
+    "TEPRE_p3": 0.981,
+    "MuLRE": 0.9765,
+    "note": "paper reports at 3600 neurons; this run is at 1200"
+  }
+}
